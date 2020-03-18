@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text,View} from 'react-native';
 import htmlparser from 'htmlparser2-without-node-native';
 import entities from 'entities';
 
@@ -62,7 +62,8 @@ export default function htmlToElement(rawHtml, customOpts = {}, done) {
           index,
           list,
           parent,
-          domToElement
+          domToElement,
+          customOpts
         );
         if (rendered || rendered === null) return rendered;
       }
@@ -72,16 +73,18 @@ export default function htmlToElement(rawHtml, customOpts = {}, done) {
       if (node.type === 'text') {
         const defaultStyle = opts.textComponentProps ? opts.textComponentProps.style : null;
         const customStyle = inheritedStyle(parent);
-
-        return (
-          <TextComponent
-            {...opts.textComponentProps}
-            key={index}
-            style={[defaultStyle, customStyle]}
-          >
-            {entities.decodeHTML(node.data)}
-          </TextComponent>
-        );
+        valot = entities.decodeHTML(node.data).replace(/\s+/," ")
+        if(valot !=""){
+          return (
+            <TextComponent
+              {...opts.textComponentProps}
+              key={index}
+              style={[defaultStyle,customStyle]}
+            >
+              {valot}
+            </TextComponent>
+          );
+        }
       }
 
       if (node.type === 'tag') {
@@ -145,18 +148,18 @@ export default function htmlToElement(rawHtml, customOpts = {}, done) {
         const {NodeComponent, styles} = opts;
 
         return (
-          <NodeComponent
+          <View
             {...opts.nodeComponentProps}
             key={index}
             onPress={linkPressHandler}
             style={!node.parent ? styles[node.name] : null}
             onLongPress={linkLongPressHandler}
           >
-            {linebreakBefore}
+            {/*linebreakBefore*/}
             {listItemPrefix}
             {domToElement(node.children, node)}
-            {linebreakAfter}
-          </NodeComponent>
+            {/*linebreakAfter*/}
+          </View>
         );
       }
     });
