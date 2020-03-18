@@ -72,6 +72,7 @@ class HtmlView extends PureComponent {
       stylesheet,
       renderNode,
       onError,
+      articleId,
     } = this.props;
 
     if (!value) {
@@ -80,10 +81,12 @@ class HtmlView extends PureComponent {
 
     const opts = {
       addLineBreaks,
-      linkHandler: onLinkPress,
+      //linkHandler: onLinkPress,
+      linkHandler: url => articleId.nav.push("OutSite",{url: url}),
       linkLongPressHandler: onLinkLongPress,
       styles: {...baseStyles, ...stylesheet, ...style},
       customRenderer: renderNode,
+      articleId: articleId,
     };
 
     htmlToElementOptKeys.forEach(key => {
@@ -151,6 +154,7 @@ HtmlView.propTypes = {
   TextComponent: PropTypes.func,
   textComponentProps: PropTypes.object,
   value: PropTypes.string,
+  articleId: PropTypes.string,
 };
 
 HtmlView.defaultProps = {
