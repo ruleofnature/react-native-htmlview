@@ -11,7 +11,7 @@ import {Image} from "react-native-elements";
 import FastImage from 'react-native-fast-image'
 
 const {width} = Dimensions.get('window');
-import AutoHeightImage from 'react-native-auto-height-image';
+
 
 const baseStyle = {
   backgroundColor: 'transparent',
@@ -57,8 +57,7 @@ export default class AutoSizedImage extends PureComponent {
     let source = {};
     let urlHeight = this.props.source.uri.match(new RegExp("[?&]" + "height" + "=(.*?)(&|$|#)"))
     if (!finalSize.width || !finalSize.height) {
-      //source = Object.assign(source, this.props.source, this.state);
-      //return <AutoHeightImage  width={width-1} source={{uri: this.props.source.uri}}/>;
+
      return <FastImage style={{ width: width-30, height:urlHeight? urlHeight: this.state.calcImgHeight }}
                       source={{
                             uri: this.props.source.uri,
@@ -71,18 +70,9 @@ export default class AutoSizedImage extends PureComponent {
                          })}
                       />;
 
-      /*return <Image style={{ width: width-30, height: urlHeight? urlHeight: 300}}
-      onLoadEnd={evt =>
-       this.setState({
-         calcImgHeight:
-           evt.nativeEvent.height / evt.nativeEvent.width * width, // By this, you keep the image ratio
-       })}
-        PlaceholderContent={<ActivityIndicator />} source={{uri:this.props.source.uri}} />;
-          */
+     
     } else {
-      //source = Object.assign(source, this.props.source, finalSize);
-      //return <AutoHeightImage  width={width-30} source={{uri: this.props.source.uri}} />;
-    //  return <AutoHeightImage  width={width-30} source={{uri: this.props.source.uri}}/>;
+     
     return <FastImage style={{ width: width-30, height: urlHeight? urlHeight: this.state.calcImgHeight }}
                      source={{
                            uri: this.props.source.uri,
@@ -94,19 +84,12 @@ export default class AutoSizedImage extends PureComponent {
                             evt.nativeEvent.height / evt.nativeEvent.width * width, // By this, you keep the image ratio
                         })}
                      />;
-  /*return <FastImage style={{ width: width-30, height: this.state.height }}
-                   source={{
-                         uri: this.props.source.uri,
-                         priority: FastImage.priority.fast,
-                     }}
-                  />;*/
 
 
     }
 
 
 
-    //return <FastImage style={style} source={{uri:　source}} />;
-    //return <Image style={style} source={source} />;
+   
   }
 }
